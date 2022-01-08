@@ -2,6 +2,7 @@ package com.pracownia.spring.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 public class DeliveryOption {
@@ -20,14 +21,18 @@ public class DeliveryOption {
     @Column
     private BigDecimal price;
 
+    //@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    //private Subject subject;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy="deliveryOptions")
+    private List<Subject> subjects;
 
     //required by Hibernate
     public DeliveryOption(){
 
     }
 
-    public DeliveryOption(Integer id, String option_name, String firm, BigDecimal price) {
-        this.id = id;
+    public DeliveryOption(String option_name, String firm, BigDecimal price) {
         this.option_name = option_name;
         this.firm = firm;
         this.price = price;
@@ -63,5 +68,13 @@ public class DeliveryOption {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<Subject> subjects) {
+        this.subjects = subjects;
     }
 }

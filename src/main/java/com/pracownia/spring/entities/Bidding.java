@@ -1,7 +1,6 @@
 package com.pracownia.spring.entities;
 
 import org.hibernate.annotations.Check;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -18,20 +17,20 @@ public class Bidding {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false, name = "subject_number", referencedColumnName = "number")
-    private Subject subject;
+    private Subject subject_number;
 
     @Column
     private ZonedDateTime date_start;
 
     @Column
-    private ZonedDateTime date_end;
+    private ZonedDateTime date_end = null;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(nullable = false, name = "winner", referencedColumnName = "login")
-    private User user;
+    @JoinColumn(name = "winner", referencedColumnName = "login")
+    private User winner;
 
     @Column(length = 30)
-    private String status;
+    private String status = "in progress";
 
 
     //required by Hibernate
@@ -39,11 +38,9 @@ public class Bidding {
 
     }
 
-    public Bidding(Integer id, ZonedDateTime date_start, ZonedDateTime date_end, String status) {
-        this.id = id;
-        this.date_start = date_start;
-        this.date_end = date_end;
-        this.status = status;
+    public Bidding(Subject subject_number) {
+        this.subject_number = subject_number;
+        this.date_start = ZonedDateTime.now();
     }
 
     public Integer getId() {
@@ -55,7 +52,11 @@ public class Bidding {
     }
 
     public Subject getSubject_number() {
-        return subject;
+        return subject_number;
+    }
+
+    public void setSubject_number(Subject subject_number) {
+        this.subject_number = subject_number;
     }
 
 
@@ -84,19 +85,11 @@ public class Bidding {
         this.status = status;
     }
 
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
-
     public User getUser() {
-        return user;
+        return winner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User winner) {
+        this.winner = winner;
     }
 }

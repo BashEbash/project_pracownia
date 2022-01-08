@@ -9,9 +9,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Basic(optional = false)
-    //@Column(length = 20)
+    @Column(length = 20, name="login")
     private String login;
 
     @Column(length = 20)
@@ -23,7 +21,7 @@ public class User {
     @Column(length = 50)
     private String address_of_residence;
 
-    @Column(length = 30)
+    @Column(length = 30, nullable = false)
     private String adres_mail;
 
     //required by Hibernate
@@ -31,7 +29,7 @@ public class User {
 
     }
 
-    public User(/*String login,*/ String name, String surname, String address_of_residence, String adres_mail) {
+    public User(String name, String surname, String address_of_residence, String adres_mail) {
         this.login = adres_mail.split("@")[0];
         this.name = name;
         this.surname = surname;

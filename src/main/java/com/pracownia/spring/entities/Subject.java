@@ -1,19 +1,27 @@
 package com.pracownia.spring.entities;
 
+import com.pracownia.spring.entities.Triggers.SubjectTrigger;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@EntityListeners(SubjectTrigger.class)
 public class Subject {
 
 
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer number;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false, name = "user_login", referencedColumnName = "login")
-    private User user;
+    private User user_login;
 
     @Column(length = 50)
     private String subject_name;
@@ -24,10 +32,12 @@ public class Subject {
     @Column
     private BigDecimal start_price;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private List<DeliveryOption> deliveryOptions = new ArrayList<DeliveryOption>();
 
-    public Subject(Integer number, User user, String subject_name, String category, BigDecimal start_price) {
-        this.number = number;
-        this.user = user;
+
+    public Subject(User user_login, String subject_name, String category, BigDecimal start_price) {
+        this.user_login = user_login;
         this.subject_name = subject_name;
         this.category = category;
         this.start_price = start_price;
@@ -47,11 +57,11 @@ public class Subject {
     }
 
     public User getUser_login() {
-        return user;
+        return user_login;
     }
 
-    public void setUser_login(User user) {
-        this.user = user;
+    public void setUser_login(User user_login) {
+        this.user_login = user_login;
     }
 
     public String getSubject_name() {
@@ -78,12 +88,12 @@ public class Subject {
         this.start_price = start_price;
     }
 
-    public User getUser() {
-        return user;
+    public List<DeliveryOption> getDeliveryOptions() {
+        return deliveryOptions;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setDeliveryOptions(List<DeliveryOption> deliveryOptions) {
+        this.deliveryOptions = deliveryOptions;
     }
 }
 

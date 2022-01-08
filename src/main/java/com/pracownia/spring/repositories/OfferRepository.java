@@ -1,9 +1,19 @@
 package com.pracownia.spring.repositories;
 
 import com.pracownia.spring.entities.Offer;
-import com.pracownia.spring.entities.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.math.BigDecimal;
+
 public interface OfferRepository extends CrudRepository<Offer, Integer>, PagingAndSortingRepository<Offer, Integer> {
+
+    @Query(value = "select * from offer where bidding_id = ?1 and amount = ?2", nativeQuery = true)
+    Offer findOfferByBidding_idAndAmount(Integer bidding_id, BigDecimal amount);
+
+    @Query(value = "select * from offer where bidding_id = ?1", nativeQuery = true)
+    Iterable<Offer> findAllByBidding_id(Integer bidding_id);
+
+
 }

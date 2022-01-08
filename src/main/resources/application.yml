@@ -7,8 +7,8 @@ spring:
       hibernate:
         #dialect: org.hibernate.dialect.MySQL8Dialect
         ddl-auto: validate
-        #hbm2ddl:
-          #auto: create
+        hbm2ddl:
+          auto: create
     show-sql: true
   database:
     driverClassName: com.mysql.cj.jdbc.Driver

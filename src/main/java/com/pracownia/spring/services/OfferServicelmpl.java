@@ -1,10 +1,11 @@
 package com.pracownia.spring.services;
 
-import com.pracownia.spring.entities.Offer;
 import com.pracownia.spring.repositories.OfferRepository;
-import com.pracownia.spring.repositories.UserRepository;
+import com.pracownia.spring.entities.Offer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 @Service
 public class OfferServicelmpl implements OfferService{
@@ -15,5 +16,15 @@ public class OfferServicelmpl implements OfferService{
     @Override
     public Offer saveOffer(Offer offer) {
         return offerRepository.save(offer);
+    }
+
+    @Override
+    public Offer findOfferByBidding_idAndAmount(Integer bidding_id, BigDecimal amount) {
+        return offerRepository.findOfferByBidding_idAndAmount(bidding_id, amount);
+    }
+
+    @Override
+    public Iterable<Offer> getOffersByBidding_id(Integer id) {
+        return offerRepository.findAllByBidding_id(id);
     }
 }
