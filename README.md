@@ -1,2 +1,3 @@
-Auction application
+#Auction application
+This application is for biddings.
 
